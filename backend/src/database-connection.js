@@ -8,7 +8,7 @@ mongoose.set('debug', true)
 
 mongoose
   .connect(
-    `mongodb+srv://${username}:${password}@cluster0.knvjh.gcp.mongodb.net/${dbName}?retryWrites=true&w=majority`,
+    `mongodb+srv://${username}:${password}@cluster0.hpptp.mongodb.net/${dbName}?retryWrites=true&w=majority`,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

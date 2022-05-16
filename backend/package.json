@@ -1,5 +1,5 @@
 {
-  "name": "db201",
+  "name": "teamup",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -21,7 +21,7 @@
       "pretty-quick --staged"
     ]
   },
-  "author": "Armagan Amcalar <armagan@amcalar.com>",
+  "author": "Emre Avsar <emre@avsar.com>",
   "license": "MIT",
   "dependencies": {
     "cookie-parser": "~1.4.4",
