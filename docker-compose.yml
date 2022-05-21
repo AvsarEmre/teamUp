@@ -1,0 +1,49 @@
+version: '3'
+services:
+  frontend:
+    image: frontend
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - 8080
+    volumes:
+      - ./frontend/src:/app/src
+  backend:
+    image: backend
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    environment:
+      #- MONGODB_USERNAME=root
+      #- MONGODB_PASSWORD=P9Z7aVZGQHro0T63
+      #- MONGODB_DATABASE=Emre
+      #- MONGODB_REMOTE=1
+      - MONGODB_CONNECTION_STRING=mongodb://mongo/teamup
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.backend.rule=(Host(`picories.localhost`) && PathPrefix(`/api`))'
+      - 'traefik.http.routers.backend.entrypoints=web'
+    ports:
+      - 3000
+      - 35729:35729
+    volumes:
+      - ./backend/src:/app/src
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data:/data
+  load-balancer:
+    image: traefik:v2.2
+    command:
+      - '--api.insecure=true'
+      - '--providers.docker=true'
+      - '--providers.docker.exposedbydefault=false'
+      - '--entrypoints.web.address=:80'
+    ports:
+      - '80:80'
+      - '8080:8080'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'

@@ -48,9 +48,9 @@ const userSchema = new mongoose.Schema({
 class User {
 
   async createTeam(team) {
-    this.teams.push(team)
+    // this.teams.push(team)
     this.teamsManaged.push(team)
-    team.members.push(this)
+    // team.members.push(this)
     team.captain.push(this)   // there is only one captain. array with one element or another method to define captain
 
     await team.save()

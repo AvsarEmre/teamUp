@@ -44,15 +44,15 @@ router.delete('/byEmail/:email', async (req, res) => {
 })
 
 router.get('/initialize', async (req, res) => {
-  //temporary delete for development
+  // temporary delete for development
   await User.deleteMany({})
-  await Product.deleteMany({})
-  await Look.deleteMany({})
+  await Team.deleteMany({})
+  await Match.deleteMany({})
 
   const mihri = await User.create({
     firstName: 'mihri',
     lastName: 'mihriLast',
-    age: 35
+    age: 35,
     email: 'mihri@mihri.com',
     password: 'password',
   })
@@ -60,7 +60,7 @@ router.get('/initialize', async (req, res) => {
   const armagan = await User.create({
     firstName: 'armagan',
     lastName: 'armaganLast',
-    age: 23
+    age: 23,
     email: 'armagan@armagan.com',
     password: 'password',
   })
@@ -68,7 +68,7 @@ router.get('/initialize', async (req, res) => {
   const steve = await User.create({
     firstName: 'steve',
     lastName: 'steveLast',
-    age: 21
+    age: 21,
     email: 'steve@steve.com',
     password: 'password',
   })

@@ -31,14 +31,15 @@ const teamSchema = new mongoose.Schema({
 
   matches: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'match',
+      ref: 'Match',
       autopopulate: true,
     }
   ],
+
   matchInvitations: []
   // I need to decide how I manage invitations
 })
 
-teamSchema.loadClass(Team);
+// teamSchema.loadClass(Team);
 teamSchema.plugin(autopopulate);
 module.exports = mongoose.model('Team', teamSchema);

@@ -29,4 +29,4 @@ const matchSchema = new mongoose.Schema({
 
 
 matchSchema.plugin(autopopulate)
-module.exports = mongoose.model('Match', teamSchema)
+module.exports = mongoose.model('Match', matchSchema)

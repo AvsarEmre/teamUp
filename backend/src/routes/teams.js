@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
     query.name = req.query.name
   }
 
-  res.send(await Product.find(query))
+  res.send(await Team.find(query))
 })
 
 /* POST create a team */
