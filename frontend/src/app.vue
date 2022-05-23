@@ -1,6 +1,5 @@
 <template lang="pug">
   #app
-    h1 teamUp
     #nav
       router-link(to="/") Home |&nbsp;
       router-link(to="/about") About
@@ -24,7 +23,7 @@ nav {
     color: #2c3e50;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #1c6a47;
     }
   }
 }
