@@ -1,8 +1,8 @@
 <template lang="pug">
   .home
-    img (alt="Vue logo" src="../assets/logo.png")
+    img(alt="Vue logo" src="../assets/logo.png")
     HelloWorld(msg="Welcome to Your Vue.js App")
-    div(v-for="user in users") {{ user.name }} has {{ user.teams.length }} teams
+    div(v-for="user in users") {{ user.firstName }} has {{ user.teams.length }} teams
 </template>
 
 <script>
@@ -25,5 +25,5 @@ export default {
 
     this.users = userRequest.data
   },
-};
+}
 </script>

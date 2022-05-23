@@ -1,8 +1,16 @@
-module.exports = {
+const { defineConfig } = require('@vue/cli-service')
+module.exports = defineConfig({
+  transpileDependencies: true,
   devServer: {
-    disableHostCheck: true,
-    host: '0.0.0.0',
-    public: '0.0.0.0:80',
+    allowedHosts: 'all',
+    client: {
+      webSocketURL: {
+        hostname: '0.0.0.0',
+        pathname: '/ws',
+        port: 80,
+        protocol: 'ws',
+      },
+    },
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
@@ -10,4 +18,4 @@ module.exports = {
     },
   },
   lintOnSave: false,
-}
+})
