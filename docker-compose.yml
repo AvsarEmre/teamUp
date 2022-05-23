@@ -1,14 +1,19 @@
-version: '3'
+version: "3"
 services:
   frontend:
     image: frontend
     build:
       context: frontend
       dockerfile: Dockerfile
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.frontend.rule=Host(`teamup.localhost`)'
+      - 'traefik.http.routers.frontend.entrypoints=web'
     ports:
       - 8080
     volumes:
       - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
   backend:
     image: backend
     build:
@@ -22,7 +27,7 @@ services:
       - MONGODB_CONNECTION_STRING=mongodb://mongo/teamup
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.backend.rule=(Host(`picories.localhost`) && PathPrefix(`/api`))'
+      - 'traefik.http.routers.backend.rule=(Host(`teamup.localhost`) && PathPrefix(`/api`))'
       - 'traefik.http.routers.backend.entrypoints=web'
     ports:
       - 3000
@@ -33,17 +38,17 @@ services:
     image: mongo
     ports:
       - 27017:27017
-    volumes:
-      - ./data:/data
+    #volumes:
+      #- ./data:/data
   load-balancer:
     image: traefik:v2.2
     command:
-      - '--api.insecure=true'
-      - '--providers.docker=true'
-      - '--providers.docker.exposedbydefault=false'
-      - '--entrypoints.web.address=:80'
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
     ports:
-      - '80:80'
-      - '8080:8080'
+      - "80:80"
+      - "8080:8080"
     volumes:
-      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
