@@ -30,9 +30,31 @@ router.get('/', async (req, res) => {
 })
 
 /* POST create a user */
-router.post('/', async (req, res) => {
-  const createdUser = await User.create(req.body)
-  res.send(createdUser)
+//router.post('/', async (req, res) => {
+//  const createdUser = await User.create(req.body)
+//  res.send(createdUser)
+//})
+
+router.post('/', async function (req, res) {
+  const { firstName, lastName, email, age } = req.body
+
+  if (!email || !firstName || !lastName || !age) {
+    res
+      .send({
+        message: 'Missing fields.',
+      })
+      .status(400)
+    return
+  }
+
+  const user = await User.create({
+    firstName,
+    lastName,
+    email,
+    age,
+  })
+
+  res.send(user)
 })
 
 /* DELETE users */
