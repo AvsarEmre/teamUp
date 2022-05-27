@@ -2,31 +2,38 @@ const mongoose = require('mongoose')
 const autopopulate = require('mongoose-autopopulate')
 
 const matchSchema = new mongoose.Schema({
-
- /*
-
- filename: String,
-
-   members: [
+  homeTeam: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      autopopulate: true,
+      ref: 'Team',
+      autopopulate: { maxDepth: 1 },
+      required: true,
     },
   ],
-  matches: [{
+  awayTeam: [
+    {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'match',
-      autopopulate: true,
-    }
+      ref: 'Team',
+      autopopulate: { maxDepth: 1 },
+      required: true,
+    },
   ],
-  matchInvitations: []
-  // I need to decide how I manage invitations
-*/
-
+  location: {
+    type: String,
+    required: true,
+  },
+  date: {
+    type: String,
+    required: true,
+  },
+  time: {
+    type: String,
+    required: true,
+  },
 })
 
+class Match {}
 
-
+matchSchema.loadClass(Match)
 matchSchema.plugin(autopopulate)
 module.exports = mongoose.model('Match', matchSchema)

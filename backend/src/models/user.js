@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const autopopulate = require('mongoose-autopopulate')
+const passportLocalMongoose = require('passport-local-mongoose')
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -18,10 +19,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     unique: true,
     required: true,
+    trim: true,
+    lowercase: true,
   },
   password: {
-      type: String,
-      required: true,
+    type: String,
+    required: true,
+    trim: true,
   },
   teams: [
     {
@@ -34,10 +38,10 @@ const userSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Team',
-      autopopulate: true,
-    }
+      autopopulate: { maxDepth: 1 },
+    },
   ],
-  membershipInvitations: []
+  membershipInvitations: [],
   // I need to decide how I manage invitations
 })
 
@@ -46,12 +50,11 @@ const userSchema = new mongoose.Schema({
 // match invitation
 
 class User {
-
   async createTeam(team) {
     // this.teams.push(team)
     this.teamsManaged.push(team)
     // team.members.push(this)
-    team.captain.push(this)   // there is only one captain. array with one element or another method to define captain
+    team.captain.push(this) // there is only one captain. array with one element or another method to define captain
 
     await team.save()
     await this.save()
@@ -64,10 +67,12 @@ class User {
     await team.save()
     await this.save()
   }
-
 }
 
 userSchema.loadClass(User)
 userSchema.plugin(autopopulate)
+userSchema.plugin(passportLocalMongoose, {
+  usernameField: 'email',
+})
 
 module.exports = mongoose.model('User', userSchema)

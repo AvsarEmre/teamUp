@@ -6,9 +6,9 @@ services:
       context: frontend
       dockerfile: Dockerfile
     labels:
-      - 'traefik.enable=true'
-      - 'traefik.http.routers.frontend.rule=Host(`teamup.localhost`)'
-      - 'traefik.http.routers.frontend.entrypoints=web'
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`teamup.localhost`)"
+      - "traefik.http.routers.frontend.entrypoints=web"
     ports:
       - 8080
     volumes:
@@ -26,20 +26,19 @@ services:
       #- MONGODB_REMOTE=1
       - MONGODB_CONNECTION_STRING=mongodb://mongo/teamup
     labels:
-      - 'traefik.enable=true'
-      - 'traefik.http.routers.backend.rule=(Host(`teamup.localhost`) && PathPrefix(`/api`))'
-      - 'traefik.http.routers.backend.entrypoints=web'
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=(Host(`teamup.localhost`) && PathPrefix(`/api`))"
+      - "traefik.http.routers.backend.entrypoints=web"
     ports:
       - 3000
       - 35729:35729
     volumes:
       - ./backend/src:/app/src
+      - ./backend/test:/app/test
   mongo:
     image: mongo
     ports:
       - 27017:27017
-    #volumes:
-      #- ./data:/data
   load-balancer:
     image: traefik:v2.2
     command:

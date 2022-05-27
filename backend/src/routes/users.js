@@ -10,12 +10,20 @@ const Match = require('../models/match')
 router.get('/', async (req, res) => {
   const query = {}
 
-  if (req.query.name) {
-    query.name = req.query.name
+  if (req.query.firstName) {
+    query.firstName = req.query.firstName
+  }
+
+  if (req.query.lastName) {
+    query.lastName = req.query.lastName
   }
 
   if (req.query.age) {
     query.age = req.query.age
+  }
+
+  if (req.query.email) {
+    query.email = req.query.email
   }
 
   res.send(await User.find(query))
@@ -54,34 +62,46 @@ router.get('/initialize', async (req, res) => {
     lastName: 'mihriLast',
     age: 35,
     email: 'mihri@mihri.com',
-    password: 'password',
   })
+  await mihri.setPassword('test')
+  await mihri.save()
 
   const armagan = await User.create({
     firstName: 'armagan',
     lastName: 'armaganLast',
     age: 23,
     email: 'armagan@armagan.com',
-    password: 'password',
   })
+  await armagan.setPassword('test')
+  await armagan.save()
 
   const steve = await User.create({
     firstName: 'steve',
     lastName: 'steveLast',
     age: 21,
     email: 'steve@steve.com',
-    password: 'password',
   })
+  await steve.setPassword('test')
+  await steve.save()
 
   const realMadrid = await Team.create({
     teamName: 'Real Madrid',
-    teamPlace: 'Madrid'
+    teamPlace: 'Madrid',
   })
 
   const barcelona = await Team.create({
     teamName: 'Barcelona',
-    teamPlace: 'Barcelona'
+    teamPlace: 'Barcelona',
   })
+
+  const elClassico = await Match.create({
+    homeTeam: [barcelona],
+    awayTeam: [realMadrid],
+    location: 'Barcelona',
+    date: '23.02.2022',
+    time: '20:00',
+  })
+  await elClassico.save()
 
   await steve.createTeam(realMadrid)
   await steve.createTeam(barcelona)
@@ -98,6 +118,11 @@ router.get('/:userId', async (req, res) => {
 
   if (user) res.render('user', { user })
   else res.sendStatus(404)
+})
+
+router.get('/:userId/json', async (req, res) => {
+  const user = await User.findById(req.params.userId)
+  res.send(user)
 })
 
 module.exports = router

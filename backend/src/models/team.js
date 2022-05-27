@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const autopopulate = require('mongoose-autopopulate')
 
 const teamSchema = new mongoose.Schema({
-
   teamName: {
     type: String,
     required: true,
@@ -17,7 +16,7 @@ const teamSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      autopopulate: true,
+      autopopulate: { maxDepth: 1 },
     },
   ],
 
@@ -29,17 +28,20 @@ const teamSchema = new mongoose.Schema({
     },
   ],
 
-  matches: [{
+  matches: [
+    {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Match',
       autopopulate: true,
-    }
+    },
   ],
 
-  matchInvitations: []
+  matchInvitations: [],
   // I need to decide how I manage invitations
 })
 
-// teamSchema.loadClass(Team);
-teamSchema.plugin(autopopulate);
-module.exports = mongoose.model('Team', teamSchema);
+class Team {}
+
+teamSchema.loadClass(Team)
+teamSchema.plugin(autopopulate)
+module.exports = mongoose.model('Team', teamSchema)

@@ -1,7 +1,6 @@
 const express = require('express')
 
 const router = express.Router()
-
 const Team = require('../models/team')
 
 /* GET products listing. */
@@ -21,7 +20,7 @@ router.post('/', async (req, res) => {
   res.send(createdTeam)
 })
 
-/* DELETE team */
+/* DELETE teams */
 router.delete('/', async (req, res) => {
   await Team.deleteMany({})
 

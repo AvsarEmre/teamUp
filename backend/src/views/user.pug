@@ -3,7 +3,7 @@ extends layout
 block content
   h1 #{user.firstName} (#{user.lastName})
   p Age: #{user.age}
-  if user.teams.length == 0 (#{user.teams.length})
+  if user.teams.length == 0 //(#{user.teams.length})
     p no team membership yet!
   else
     p #{user.teams.map(team => team.name).join(', ')}
