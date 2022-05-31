@@ -12,13 +12,13 @@ const teamSchema = new mongoose.Schema({
     required: true,
   },
 
-  captain: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      autopopulate: { maxDepth: 1 },
-    },
-  ],
+  //captain: [
+  //  {
+  //    type: mongoose.Schema.Types.ObjectId,
+  //    ref: 'User',
+  //    autopopulate: { maxDepth: 1 },
+  //  },
+  //],
 
   members: [
     {
@@ -36,7 +36,7 @@ const teamSchema = new mongoose.Schema({
     },
   ],
 
-  matchInvitations: [],
+  // matchInvitations: [],
   // I need to decide how I manage invitations
 })
 

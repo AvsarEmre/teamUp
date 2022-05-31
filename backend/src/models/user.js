@@ -34,14 +34,14 @@ const userSchema = new mongoose.Schema({
       autopopulate: true,
     },
   ],
-  teamsManaged: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Team',
-      autopopulate: { maxDepth: 1 },
-    },
-  ],
-  membershipInvitations: [],
+  // teamsManaged: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: 'Team',
+  //     autopopulate: { maxDepth: 1 },
+  //   },
+  // ],
+  // membershipInvitations: [],
   // I need to decide how I manage invitations
 })
 
@@ -51,10 +51,10 @@ const userSchema = new mongoose.Schema({
 
 class User {
   async createTeam(team) {
-    // this.teams.push(team)
-    this.teamsManaged.push(team)
-    // team.members.push(this)
-    team.captain.push(this) // there is only one captain. array with one element or another method to define captain
+    this.teams.push(team)
+    // this.teamsManaged.push(team)
+    team.members.push(this)
+    // team.captain.push(this) // there is only one captain. array with one element or another method to define captain
 
     await team.save()
     await this.save()
