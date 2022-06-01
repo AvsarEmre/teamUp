@@ -1,6 +1,7 @@
 const express = require('express')
 
 const router = express.Router()
+const axios = require('axios')
 
 const User = require('../models/user')
 const Team = require('../models/team')
@@ -85,7 +86,7 @@ router.get('/initialize', async (req, res) => {
     age: 35,
     email: 'mihri@mihri.com',
   })
-  await mihri.setPassword('test')
+  await mihri.setPassword('password')
   await mihri.save()
 
   const armagan = await User.create({
@@ -94,7 +95,7 @@ router.get('/initialize', async (req, res) => {
     age: 23,
     email: 'armagan@armagan.com',
   })
-  await armagan.setPassword('test')
+  await armagan.setPassword('password')
   await armagan.save()
 
   const steve = await User.create({
@@ -103,7 +104,7 @@ router.get('/initialize', async (req, res) => {
     age: 21,
     email: 'steve@steve.com',
   })
-  await steve.setPassword('test')
+  await steve.setPassword('password')
   await steve.save()
 
   const realMadrid = await Team.create({
@@ -123,6 +124,7 @@ router.get('/initialize', async (req, res) => {
     date: '23.02.2022',
     time: '20:00',
   })
+
   await elClassico.save()
 
   await steve.createTeam(realMadrid)
