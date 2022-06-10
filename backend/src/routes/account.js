@@ -6,7 +6,7 @@ const User = require('../models/user')
 const router = express.Router()
 
 router.get('/session', (req, res) => {
-  res.send(req.user)
+  res.send(req.user._id)
   console.log(`I am a session`)
 })
 

@@ -39,7 +39,7 @@ router.get('/', async (req, res) => {
 router.post('/', async function (req, res) {
   const { firstName, lastName, email, age } = req.body
 
-  if (!email || !firstName || !lastName || !age) {
+  if (!firstName || !lastName || !email || !age) {
     res
       .send({
         message: 'Missing fields.',
@@ -80,29 +80,29 @@ router.get('/initialize', async (req, res) => {
   await Team.deleteMany({})
   await Match.deleteMany({})
 
-  const mihri = await User.create({
-    firstName: 'mihri',
-    lastName: 'mihriLast',
-    age: 35,
-    email: 'mihri@mihri.com',
+  const marsel = await User.create({
+    firstName: 'marsel',
+    lastName: 'kuş',
+    age: 2,
+    email: 'marsel@avsar.com',
   })
-  await mihri.setPassword('password')
-  await mihri.save()
+  await marsel.setPassword('password')
+  await marsel.save()
 
-  const armagan = await User.create({
-    firstName: 'armagan',
-    lastName: 'armaganLast',
-    age: 23,
-    email: 'armagan@armagan.com',
+  const emre = await User.create({
+    firstName: 'emre',
+    lastName: 'avsar',
+    age: 17,
+    email: 'emre@avsar.com',
   })
-  await armagan.setPassword('password')
-  await armagan.save()
+  await emre.setPassword('password')
+  await emre.save()
 
   const steve = await User.create({
     firstName: 'steve',
-    lastName: 'steveLast',
+    lastName: 'ingram',
     age: 21,
-    email: 'steve@steve.com',
+    email: 'steve@ingram.com',
   })
   await steve.setPassword('password')
   await steve.save()
@@ -117,23 +117,23 @@ router.get('/initialize', async (req, res) => {
     teamPlace: 'Barcelona',
   })
 
+  await steve.createTeam(realMadrid)
+  await marsel.createTeam(barcelona)
+  await emre.becomeTeamMember(realMadrid)
+  await steve.becomeTeamMember(barcelona)
+
+  console.log('hello marsel')
   const elClassico = await Match.create({
-    homeTeam: [barcelona],
-    awayTeam: [realMadrid],
+    homeTeam: barcelona,
+    awayTeam: realMadrid,
     location: 'Barcelona',
     date: '23.02.2022',
     time: '20:00',
   })
 
-  await elClassico.save()
+  await marsel.createMatch(elClassico)
 
-  await steve.createTeam(realMadrid)
-  await steve.createTeam(barcelona)
-
-  await armagan.becomeTeamMember(realMadrid)
-  await mihri.becomeTeamMember(barcelona)
-
-  console.log(steve)
+  // console.log(steve)
   res.sendStatus(200)
 })
 

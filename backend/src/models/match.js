@@ -2,22 +2,20 @@ const mongoose = require('mongoose')
 const autopopulate = require('mongoose-autopopulate')
 
 const matchSchema = new mongoose.Schema({
-  homeTeam: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Team',
-      autopopulate: { maxDepth: 1 },
-      required: true,
-    },
-  ],
-  awayTeam: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Team',
-      autopopulate: { maxDepth: 1 },
-      required: true,
-    },
-  ],
+  homeTeam: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Team',
+    autopopulate: { maxDepth: 1 },
+    required: true,
+  },
+
+  awayTeam: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Team',
+    autopopulate: { maxDepth: 1 },
+    required: true,
+  },
+
   location: {
     type: String,
     required: true,

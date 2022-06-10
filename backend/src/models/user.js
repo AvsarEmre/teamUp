@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const autopopulate = require('mongoose-autopopulate')
 const passportLocalMongoose = require('passport-local-mongoose')
+const team = require('./team')
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -66,6 +67,22 @@ class User {
 
     await team.save()
     await this.save()
+  }
+
+  async createMatch(match) {
+    console.log('createMatch method')
+    console.log({ match })
+    const homeTeam = match.homeTeam
+    const awayTeam = match.awayTeam
+    console.log({ homeTeam })
+    console.log({ awayTeam })
+    //match.homeTeam.push(team)
+    //match.awayTeam.push(team)
+    //homeTeam.matches.push(match)
+    //awayTeam.matches.push(match)
+
+    //await team.save()
+    //await match.save()
   }
 }
 
