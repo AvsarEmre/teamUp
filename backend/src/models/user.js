@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const autopopulate = require('mongoose-autopopulate')
 const passportLocalMongoose = require('passport-local-mongoose')
 const team = require('./team')
+const match = require('./match')
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -32,9 +33,10 @@ const userSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Team',
-      autopopulate: true,
+      autopopulate: { maxDepth: 1 },
     },
   ],
+
   // teamsManaged: [
   //   {
   //     type: mongoose.Schema.Types.ObjectId,
@@ -71,18 +73,22 @@ class User {
 
   async createMatch(match) {
     console.log('createMatch method')
-    console.log({ match })
+    //console.log({ match })
     const homeTeam = match.homeTeam
     const awayTeam = match.awayTeam
-    console.log({ homeTeam })
-    console.log({ awayTeam })
+    //console.log({ homeTeam })
+    //console.log({ awayTeam })
     //match.homeTeam.push(team)
     //match.awayTeam.push(team)
-    //homeTeam.matches.push(match)
-    //awayTeam.matches.push(match)
+    homeTeam.matches.push(match)
+    awayTeam.matches.push(match)
 
-    //await team.save()
-    //await match.save()
+    await match.save()
+    await homeTeam.save()
+    await awayTeam.save()
+
+    //await match.awayTeam.save()
+    // team.matches.push(match)
   }
 }
 

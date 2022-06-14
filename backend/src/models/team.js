@@ -24,7 +24,7 @@ const teamSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      autopopulate: true,
+      autopopulate: { maxDepth: 1 },
     },
   ],
 
@@ -32,9 +32,17 @@ const teamSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Match',
-      autopopulate: true,
+      autopopulate: { maxDepth: 1 },
     },
   ],
+
+  // matchesAway: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: 'Match',
+  //     autopopulate: { maxDepth: 1 },
+  //   },
+  // ],
 
   // matchInvitations: [],
   // I need to decide how I manage invitations

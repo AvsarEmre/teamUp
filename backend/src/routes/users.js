@@ -109,12 +109,13 @@ router.get('/initialize', async (req, res) => {
 
   const realMadrid = await Team.create({
     teamName: 'Real Madrid',
-    teamPlace: 'Madrid',
+    teamPlace: 'MadridCity',
   })
 
   const barcelona = await Team.create({
     teamName: 'Barcelona',
-    teamPlace: 'Barcelona',
+    teamPlace: 'BarcelonaCity',
+    matches: [],
   })
 
   await steve.createTeam(realMadrid)
@@ -126,14 +127,18 @@ router.get('/initialize', async (req, res) => {
   const elClassico = await Match.create({
     homeTeam: barcelona,
     awayTeam: realMadrid,
-    location: 'Barcelona',
+    location: 'CampNou',
     date: '23.02.2022',
     time: '20:00',
   })
 
   await marsel.createMatch(elClassico)
 
-  // console.log(steve)
+  //realMadrid.matches.push(elClassico)
+  //barcelona.matches.push(elClassico)
+  //elClassico.homeTeam.matches.push(elClassico)
+  //await realMadrid.save()
+  //console.log(elClassico.homeTeam.matches)
   res.sendStatus(200)
 })
 
