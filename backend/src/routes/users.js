@@ -36,6 +36,7 @@ router.get('/', async (req, res) => {
 //  res.send(createdUser)
 //})
 
+/* POST create a user */
 router.post('/', async function (req, res) {
   const { firstName, lastName, email, age } = req.body
 
@@ -54,8 +55,53 @@ router.post('/', async function (req, res) {
     email,
     age,
   })
-
+  user.becomeTeamMember
   res.send(user)
+})
+
+/* POST create a match */
+router.post('/newmatch', async function (req, res) {
+  const { homeTeam, awayTeam, location, date, time } = req.body
+
+  if (!homeTeam || !awayTeam || !location || !date || !time) {
+    res
+      .send({
+        message: 'Missing fields.',
+      })
+      .status(400)
+    return
+  }
+
+  const match = await Match.create({
+    homeTeam,
+    awayTeam,
+    location,
+    date,
+    time,
+  })
+
+  res.send(match)
+})
+
+/* POST create a team */
+router.post('/newteam', async function (req, res) {
+  const { teamName, teamPlace } = req.body
+
+  if (!teamName || !teamPlace) {
+    res
+      .send({
+        message: 'Missing fields.',
+      })
+      .status(400)
+    return
+  }
+
+  const team = await Team.create({
+    teamName,
+    teamPlace,
+  })
+
+  res.send(team)
 })
 
 /* DELETE users */
